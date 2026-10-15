@@ -469,7 +469,7 @@
       const moduleIcon = moduleIconMap[appEl.dataset.module] || 'dashboard';
       const h1 = mainEl.querySelector('.page-headline-group h1');
       if (h1 && !h1.querySelector('.page-icon-badge')) {
-        h1.insertAdjacentHTML('afterbegin', `<span class="page-icon-badge">${svg(moduleIcon, 18)}</span>`);
+        h1.insertAdjacentHTML('afterbegin', `<span class="page-icon-badge">${svg(moduleIcon, 23)}</span>`);
       }
     }
 

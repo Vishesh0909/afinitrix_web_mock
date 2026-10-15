@@ -942,9 +942,9 @@ html.reveal-enabled .reveal.in-view {
 }
 
 .page-icon-badge {
-  width: 34px;
-  height: 34px;
-  border-radius: var(--rad-md);
+  width: 42px;
+  height: 42px;
+  border-radius: var(--rad-lg);
   background: var(--module-accent-surface, var(--brand-surface));
   color: var(--module-accent, var(--brand));
   display: inline-flex;
@@ -2302,6 +2302,9 @@ table.saas-table tbody tr.selected td:first-child::before {
 }
 
 /* Responsive */
+/* Shown only where the sidebar goes off-canvas and needs a way to open */
+.mobile-only { display: none; }
+
 @media (max-width: 1080px) {
   .app-sidebar {
     position: fixed;
@@ -2315,6 +2318,7 @@ table.saas-table tbody tr.selected td:first-child::before {
     transform: translateX(0);
   }
   .command-search-trigger { width: 180px; }
+  .mobile-only { display: flex; }
 }
 
 @media (max-width: 768px) {

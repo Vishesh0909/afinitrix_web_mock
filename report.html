@@ -7,6 +7,7 @@
   <meta name="description" content="Statutory Trial Balance, general ledger reconciliation, and hierarchical Chart of Accounts audit.">
   <link rel="icon" type="image/svg+xml" href="assets/afintrix-symbol.svg">
   <link rel="stylesheet" href="css/sapphire.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 </head>
 <body>
 <div class="app" data-module="accounting" data-section="report">
@@ -72,12 +73,12 @@
           <div style="display:flex;align-items:center;gap:24px">
             <div>
               <div style="font-size:11px;font-weight:600;color:var(--ink-muted);text-transform:uppercase">Total Debits</div>
-              <div class="num" style="font-size:18px;font-weight:800;color:var(--brand)">$ 1,177,861.00</div>
+              <div class="num" style="font-size:18px;font-weight:800;color:var(--brand)">$ <span data-countup="1177861">0</span>.00</div>
             </div>
             <div style="width:1px;height:24px;background:var(--border)"></div>
             <div>
               <div style="font-size:11px;font-weight:600;color:var(--ink-muted);text-transform:uppercase">Total Credits</div>
-              <div class="num" style="font-size:18px;font-weight:800;color:var(--brand)">$ 1,177,861.00</div>
+              <div class="num" style="font-size:18px;font-weight:800;color:var(--brand)">$ <span data-countup="1177861">0</span>.00</div>
             </div>
             <div style="width:1px;height:24px;background:var(--border)"></div>
             <div>
@@ -88,8 +89,23 @@
         </div>
       </div>
 
+      <!-- 1b. Ledger Group Composition -->
+      <div class="saas-card animate-enter animate-delay-2" style="margin-bottom:20px">
+        <div class="card-header-bar">
+          <div>
+            <h3>Ledger Group Closing Balances</h3>
+            <div class="card-subtext">Net position by top-level account group, FY 2026&ndash;2027</div>
+          </div>
+        </div>
+        <div class="card-content-body">
+          <div class="chart-box chart-box-xs">
+            <canvas id="ledgerGroupChart"></canvas>
+          </div>
+        </div>
+      </div>
+
       <!-- 2. Query Parameter Controls -->
-      <div class="saas-card animate-enter animate-delay-2" style="padding:14px 20px;margin-bottom:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+      <div class="saas-card animate-enter animate-delay-3" style="padding:14px 20px;margin-bottom:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
         <div class="form-group" style="min-width:180px">
           <label class="form-label-deck" style="font-size:11px">Operating Entity</label>
           <select class="form-input" style="height:32px">
@@ -145,7 +161,7 @@
       </div>
 
       <!-- 4. Hierarchical Ledger Accounts Table -->
-      <div class="table-wrapper animate-enter animate-delay-3">
+      <div class="table-wrapper animate-enter animate-delay-4">
         <div class="card-header-bar">
           <div>
             <h3>Chart of Accounts Balances</h3>

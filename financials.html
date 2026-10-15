@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Financial Overview · AFINTRIX ERP</title>
+  <meta name="description" content="Modern enterprise-grade ERP workspace connecting finance, procurement, human resources, and business operations.">
+  <meta property="og:title" content="Financial Overview · AFINTRIX ERP">
+  <meta property="og:description" content="Modern enterprise-grade ERP workspace connecting finance, procurement, human resources, and business operations.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="assets/afintrix-symbol.svg">
+  <link rel="stylesheet" href="css/sapphire.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="app" data-module="accounting" data-section="dashboard">
+  <main class="main">
+    <div data-crumb="Financial Operations / Executive Overview" hidden></div>
+
+    <!-- Page Header & Action Controls -->
+    <div class="page-title-banner animate-enter">
+      <div class="page-title-row">
+        <div class="page-headline-group">
+          <h1>Financial Overview</h1>
+          <div class="page-caption">
+            <span>Afintrix (Demo) Entity</span>
+            <span>&middot;</span>
+            <span>General Ledger &middot; FY 2026&ndash;2027</span>
+            <span>&middot;</span>
+            <span style="color:var(--pos);font-weight:600">Accounts Reconciled</span>
+          </div>
+        </div>
+
+        <div class="page-action-cluster">
+          <div class="segmented-control">
+            <span class="segmented-pill"></span>
+            <button class="btn btn-ghost btn-sm active">FY 2026-2027</button>
+            <button class="btn btn-ghost btn-sm">Q1 Target</button>
+            <button class="btn btn-ghost btn-sm">Month</button>
+          </div>
+
+          <button class="btn btn-secondary btn-sm" id="syncBtn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+            <span>Sync</span>
+          </button>
+
+          <button class="btn btn-primary btn-sm" data-open="mNew">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+            <span>Post Entry</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="page-nav-tabs">
+        <button class="tab-nav-btn active" data-tab="ov">Executive Summary</button>
+        <button class="tab-nav-btn" data-tab="cash">Cash &amp; Bank Liquidity</button>
+        <button class="tab-nav-btn" data-tab="rec">Receivables Ageing</button>
+      </div>
+    </div>
+
+    <!-- Viewport Canvas -->
+    <div class="page-viewport-canvas">
+
+      <!-- Tab: Executive Summary -->
+      <div data-panel="ov">
+
+        <!-- 1. Hero Unified Financial Operating Position Deck -->
+        <div class="saas-card animate-enter animate-delay-1" style="margin-bottom:24px;background:linear-gradient(135deg, var(--surface) 0%, var(--surface-alt) 100%);border:1px solid var(--border-strong)">
+          <div style="padding:24px 28px;display:grid;grid-template-columns:1.2fr 2fr;gap:28px;align-items:center">
+            
+            <!-- Left: Net Operating Surplus -->
+            <div style="border-right:1px solid var(--border);padding-right:24px">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+                <span style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-secondary)">Net Operating Surplus (YTD)</span>
+                <span class="status-badge green">+12.4% MoM</span>
+              </div>
+              <div class="num" style="font-size:38px;font-weight:800;color:var(--ink);letter-spacing:-0.03em;line-height:1.1">
+                <span class="cur" style="font-size:24px">$</span><span data-countup="109340">0</span><small style="font-size:18px;color:var(--ink-muted)">.00</small>
+              </div>
+              <div style="margin-top:14px;display:flex;align-items:center;gap:18px;font-size:12.5px">
+                <div>
+                  <span style="color:var(--ink-muted)">Income:</span>
+                  <b class="num" style="color:var(--pos);font-weight:700;margin-left:4px">$363,100</b>
+                </div>
+                <div style="width:1px;height:14px;background:var(--border)"></div>
+                <div>
+                  <span style="color:var(--ink-muted)">Expenses:</span>
+                  <b class="num" style="color:var(--ink);font-weight:700;margin-left:4px">$253,760</b>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Capital Distribution Matrix -->
+            <div style="display:grid;grid-template-columns:repeat(4, minmax(0, 1fr));gap:16px">
+              <div class="hover-lift" style="padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--rad-md);box-shadow:var(--shadow-xs)">
+                <div style="font-size:11px;font-weight:600;color:var(--ink-muted);margin-bottom:4px">Outgoing Bills</div>
+                <div class="num" style="font-size:19px;font-weight:800;color:var(--ink)">$3.63<small style="font-size:13px">L</small></div>
+                <div style="font-size:11px;color:var(--brand);margin-top:4px;font-weight:600">18 Open Bills</div>
+                <div class="sparkline-box"><canvas id="sparkOutgoing"></canvas></div>
+              </div>
+
+              <div class="hover-lift" style="padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--rad-md);box-shadow:var(--shadow-xs)">
+                <div style="font-size:11px;font-weight:600;color:var(--ink-muted);margin-bottom:4px">Incoming Bills</div>
+                <div class="num" style="font-size:19px;font-weight:800;color:var(--ink)">$3.49<small style="font-size:13px">L</small></div>
+                <div style="font-size:11px;color:var(--ink-secondary);margin-top:4px;font-weight:600">22 Payable Lines</div>
+                <div class="sparkline-box"><canvas id="sparkIncoming"></canvas></div>
+              </div>
+
+              <div class="hover-lift" style="padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--rad-md);box-shadow:var(--shadow-xs)">
+                <div style="font-size:11px;font-weight:600;color:var(--ink-muted);margin-bottom:4px">Inflow Cleared</div>
+                <div class="num" style="font-size:19px;font-weight:800;color:var(--pos)">$47.00<small style="font-size:13px">K</small></div>
+                <div style="font-size:11px;color:var(--ink-secondary);margin-top:4px;font-weight:600">6 Receipts</div>
+                <div class="sparkline-box"><canvas id="sparkInflow"></canvas></div>
+              </div>
+
+              <div class="hover-lift stat-tile-clickable" data-scroll-to="ageingCard" data-flash-chart="ageingDonut:3" title="Jump to Receivables Ageing" style="padding:10px 14px;background:var(--gold-surface);border:1px solid var(--gold-border);border-radius:var(--rad-md)">
+                <div style="font-size:11px;font-weight:700;color:var(--gold-ink);margin-bottom:4px">Overdue &gt;90d</div>
+                <div class="num" style="font-size:19px;font-weight:800;color:var(--gold-ink)">$38.50<small style="font-size:13px">K</small></div>
+                <div style="font-size:11px;color:var(--gold-ink);margin-top:4px;font-weight:600">4 Accounts Flagged</div>
+                <div class="sparkline-box"><canvas id="sparkOverdue"></canvas></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 2. Dual Pillar Intelligence Grid -->
+        <div style="display:grid;grid-template-columns:1.8fr 1.2fr;gap:24px;margin-bottom:24px" class="animate-enter animate-delay-2">
+          
+          <!-- Profit & Loss Multi-Layer Performance Chart -->
+          <div class="saas-card">
+            <div class="card-header-bar">
+              <div>
+                <h3>Operating Trajectory &amp; Margin Curve</h3>
+                <div class="card-subtext">Jul 2026 &ndash; Jun 2027 fiscal year monthly actuals</div>
+              </div>
+              <div class="chart-legend-row">
+                <span class="chart-legend-chip" data-chart="trajectoryChart" data-dataset-index="0"><span class="legend-swatch" style="background:var(--brand)"></span>Revenue</span>
+                <span class="chart-legend-chip" data-chart="trajectoryChart" data-dataset-index="1"><span class="legend-swatch" style="background:var(--gold)"></span>Expense</span>
+                <span class="chart-legend-chip" data-chart="trajectoryChart" data-dataset-index="2"><span class="legend-swatch" style="background:var(--pos)"></span>Net</span>
+              </div>
+            </div>
+            <div class="card-content-body">
+              <div class="chart-box chart-box-md">
+                <canvas id="trajectoryChart"></canvas>
+              </div>
+              <div style="text-align:center;font-size:11.5px;color:var(--ink-muted);margin-top:6px">
+                Solid bars = actual postings through August 2026 &middot; Faded bars = full-year projection
+              </div>
+            </div>
+          </div>
+
+          <!-- Receivables Ageing & Risk Matrix -->
+          <div class="saas-card" id="ageingCard">
+            <div class="card-header-bar">
+              <div>
+                <h3>Receivables Ageing Matrix</h3>
+                <div class="card-subtext">Total Outstanding: <b class="num" style="color:var(--ink)">$316,100</b></div>
+              </div>
+              <a href="report.html" class="btn btn-ghost btn-sm" style="color:var(--brand);font-weight:700">Audit &rarr;</a>
+            </div>
+            <div class="card-content-body">
+              <div class="donut-legend-row">
+                <div class="donut-wrap">
+                  <canvas id="ageingDonut"></canvas>
+                </div>
+
+                <!-- Breakdown List -->
+                <div class="donut-legend-list">
+                  <div class="donut-legend-row-item" data-chart-link="ageingDonut" data-seg-index="0">
+                    <div style="display:flex;align-items:center;gap:8px">
+                      <span class="legend-swatch" style="background:#1E39D6"></span>
+                      <span style="font-weight:600;font-size:12.5px">0&ndash;30 Days (Current)</span>
+                    </div>
+                    <span class="num" style="font-weight:700">$142,100.00</span>
+                  </div>
+
+                  <div class="donut-legend-row-item" data-chart-link="ageingDonut" data-seg-index="1">
+                    <div style="display:flex;align-items:center;gap:8px">
+                      <span class="legend-swatch" style="background:#4865FF"></span>
+                      <span style="font-weight:600;font-size:12.5px">31&ndash;60 Days</span>
+                    </div>
+                    <span class="num" style="font-weight:700">$78,600.00</span>
+                  </div>
+
+                  <div class="donut-legend-row-item" data-chart-link="ageingDonut" data-seg-index="2">
+                    <div style="display:flex;align-items:center;gap:8px">
+                      <span class="legend-swatch" style="background:#8FA1FF"></span>
+                      <span style="font-weight:600;font-size:12.5px">61&ndash;90 Days</span>
+                    </div>
+                    <span class="num" style="font-weight:700">$56,900.00</span>
+                  </div>
+
+                  <div class="donut-legend-row-item flag" data-chart-link="ageingDonut" data-seg-index="3">
+                    <div style="display:flex;align-items:center;gap:8px">
+                      <span class="legend-swatch" style="background:#D5AA55"></span>
+                      <span style="font-weight:700;font-size:12.5px;color:var(--gold-ink)">90+ Days (Critical)</span>
+                    </div>
+                    <span class="num" style="font-weight:800;color:var(--gold-ink)">$38,500.00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 3. Operational Triage & Recent Ledger Activity -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px" class="animate-enter animate-delay-3">
+          
+          <!-- Actionable Triage Queue -->
+          <div class="saas-card">
+            <div class="card-header-bar">
+              <div style="display:flex;align-items:center;gap:8px">
+                <h3>Operational Action Triage</h3>
+                <span class="status-badge yellow">4 Pending Items</span>
+              </div>
+            </div>
+            <div class="card-content-body p-0">
+              <div style="display:flex;flex-direction:column">
+                
+                <a href="report.html" style="display:flex;align-items:center;gap:14px;padding:14px 20px;border-bottom:1px solid var(--border-subtle);transition:background var(--duration-fast)" onmouseover="this.style.background='var(--surface-hover)'" onmouseout="this.style.background=''">
+                  <div style="width:34px;height:34px;border-radius:var(--rad-sm);background:var(--gold-surface);color:var(--gold-ink);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                  </div>
+                  <div style="flex:1">
+                    <div style="font-weight:700;font-size:13px;color:var(--ink)">Overdue Receivable Resolution</div>
+                    <div style="font-size:11.5px;color:var(--ink-secondary)">4 commercial invoices past agreed payment deadline</div>
+                  </div>
+                  <span class="num" style="font-weight:800;color:var(--gold-ink)">$38,500 &rarr;</span>
+                </a>
+
+                <a href="list.html" style="display:flex;align-items:center;gap:14px;padding:14px 20px;border-bottom:1px solid var(--border-subtle);transition:background var(--duration-fast)" onmouseover="this.style.background='var(--surface-hover)'" onmouseout="this.style.background=''">
+                  <div style="width:34px;height:34px;border-radius:var(--rad-sm);background:var(--brand-surface);color:var(--brand);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M4 10h3v7H4zM10.5 10h3v7h-3zM2 19h20v3H2zM17 10h3v7h-3zM12 1L2 6v2h20V6z"/></svg>
+                  </div>
+                  <div style="flex:1">
+                    <div style="font-weight:700;font-size:13px;color:var(--ink)">Bank Reconciliation Outstanding</div>
+                    <div style="font-size:11.5px;color:var(--ink-secondary)">Demo Bank Account &middot; 12 unreconciled entries</div>
+                  </div>
+                  <span class="status-badge blue">12 Lines &rarr;</span>
+                </a>
+
+                <a href="list.html" style="display:flex;align-items:center;gap:14px;padding:14px 20px;border-bottom:1px solid var(--border-subtle);transition:background var(--duration-fast)" onmouseover="this.style.background='var(--surface-hover)'" onmouseout="this.style.background=''">
+                  <div style="width:34px;height:34px;border-radius:var(--rad-sm);background:var(--surface-alt);color:var(--ink-secondary);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                  </div>
+                  <div style="flex:1">
+                    <div style="font-weight:700;font-size:13px;color:var(--ink)">Draft Procurement Authorization</div>
+                    <div style="font-size:11.5px;color:var(--ink-secondary)">PUR-ORD-2026-00036 ready for vendor transmission</div>
+                  </div>
+                  <span class="status-badge neutral">Draft &rarr;</span>
+                </a>
+
+                <a href="report.html" style="display:flex;align-items:center;gap:14px;padding:14px 20px;transition:background var(--duration-fast)" onmouseover="this.style.background='var(--surface-hover)'" onmouseout="this.style.background=''">
+                  <div style="width:34px;height:34px;border-radius:var(--rad-sm);background:var(--brand-surface);color:var(--brand);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                  </div>
+                  <div style="flex:1">
+                    <div style="font-weight:700;font-size:13px;color:var(--ink)">Fiscal Variance Budget Lock</div>
+                    <div style="font-size:11.5px;color:var(--ink-secondary)">FY 2026&ndash;2027 departmental variance control limits</div>
+                  </div>
+                  <span class="status-badge blue">Configure &rarr;</span>
+                </a>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Journal Stream Table -->
+          <div class="saas-card">
+            <div class="card-header-bar">
+              <div>
+                <h3>Recent Ledger Postings</h3>
+                <div class="card-subtext">Last 5 journal entries posted to Afintrix (Demo)</div>
+              </div>
+              <a href="report.html" class="btn btn-ghost btn-sm" style="color:var(--brand);font-weight:700">All Entries &rarr;</a>
+            </div>
+            <div class="card-content-body p-0">
+              <table class="saas-table dense">
+                <thead>
+                  <tr>
+                    <th class="sortable">Voucher #</th>
+                    <th class="sortable">Target Account</th>
+                    <th class="sortable">Date</th>
+                    <th class="align-right sortable">Amount ($)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="primary-ref"><a href="form.html">JV-2026-00048</a></td>
+                    <td>Bank Accounts</td>
+                    <td class="numeric">31-08-2026</td>
+                    <td class="numeric">164,854.00</td>
+                  </tr>
+                  <tr>
+                    <td class="primary-ref"><a href="form.html">JV-2026-00047</a></td>
+                    <td>Debtors</td>
+                    <td class="numeric">30-08-2026</td>
+                    <td class="numeric">47,000.00</td>
+                  </tr>
+                  <tr>
+                    <td class="primary-ref"><a href="form.html">JV-2026-00046</a></td>
+                    <td>Stock In Hand</td>
+                    <td class="numeric">28-08-2026</td>
+                    <td class="numeric">253,760.00</td>
+                  </tr>
+                  <tr>
+                    <td class="primary-ref"><a href="form.html">JV-2026-00045</a></td>
+                    <td>Creditors</td>
+                    <td class="numeric">26-08-2026</td>
+                    <td class="numeric">349,147.00</td>
+                  </tr>
+                  <tr>
+                    <td class="primary-ref"><a href="form.html">JV-2026-00044</a></td>
+                    <td>Sales Operating</td>
+                    <td class="numeric">24-08-2026</td>
+                    <td class="numeric">363,100.00</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 4. Expense Composition & Budget Intelligence -->
+        <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:24px;margin-top:24px" class="animate-enter animate-delay-4">
+
+          <!-- Expense Breakdown by Category -->
+          <div class="saas-card">
+            <div class="card-header-bar">
+              <div>
+                <h3>FY 2026&ndash;2027 Projected Expense Allocation</h3>
+                <div class="card-subtext">Full-year budget distribution across cost categories</div>
+              </div>
+            </div>
+            <div class="card-content-body">
+              <div class="chart-box chart-box-sm">
+                <canvas id="expenseBreakdownChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Budget vs Actual Radar -->
+          <div class="saas-card">
+            <div class="card-header-bar">
+              <div>
+                <h3>Budget vs Actual Utilization</h3>
+                <div class="card-subtext">% of department budget consumed, YTD</div>
+              </div>
+            </div>
+            <div class="card-content-body">
+              <div class="chart-box chart-box-sm">
+                <canvas id="budgetRadarChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Tab: Cash & Bank Liquidity -->
+      <div data-panel="cash" hidden>
+        <div class="saas-card animate-enter">
+          <div class="card-header-bar">
+            <div>
+              <h3>Institutional Cash &amp; Bank Liquidity</h3>
+              <div class="card-subtext">12-Month Liquidity Trajectory &middot; Demo Bank Account</div>
+            </div>
+            <span class="status-badge red">Overdraft Facility Active</span>
+          </div>
+          <div class="card-content-body">
+            <div class="chart-box chart-box-sm">
+              <canvas id="cashFlowChart"></canvas>
+            </div>
+
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:14px;border-top:1px solid var(--border-subtle);font-size:12.5px">
+              <span style="display:flex;align-items:center;gap:6px">
+                <span style="width:10px;height:10px;background:#1E39D6;border-radius:2px"></span>
+                <span>Principal Operating Account (Dhaka AD)</span>
+              </span>
+              <span style="color:var(--neg);font-weight:700">
+                Closing Overdraft Position: <span class="num">($117,854.00)</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Receivables Ageing -->
+      <div data-panel="rec" hidden>
+        <div class="saas-card animate-enter" style="padding:60px 24px;text-align:center">
+          <div style="width:52px;height:52px;border-radius:var(--rad-md);background:var(--brand-surface);color:var(--brand);display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+          </div>
+          <h3 style="font-size:17px;margin-bottom:8px">Accounts Receivable Master Audit</h3>
+          <p style="font-size:13.5px;color:var(--ink-secondary);max-width:480px;margin:0 auto 24px">
+            Inspect individual debtor balances, payment covenants, and write-off risks for Afintrix (Demo).
+          </p>
+          <a href="report.html" class="btn btn-primary btn-sm">Launch Comprehensive Trial Balance &rarr;</a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- Modal: Post New Entry -->
+<div class="saas-modal" id="mNew">
+  <div class="modal-header-deck">
+    <h3>Post New Ledger Transaction</h3>
+    <button class="btn btn-icon btn-sm" data-close>&times;</button>
+  </div>
+  <div class="modal-body-deck">
+    <div class="banner-callout info" style="margin-bottom:16px">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+      <div>
+        <div style="font-weight:700">Posting to Active Fiscal Year 2026&ndash;2027</div>
+        <div style="font-size:12px;color:var(--ink-secondary)">Transaction will post against Afintrix (Demo) in US Dollars ($ / USD).</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div class="form-group">
+        <label class="form-label-deck">Voucher Classification <span class="req">*</span></label>
+        <select class="form-input">
+          <option>Journal Entry</option>
+          <option>Payment Entry</option>
+          <option>Sales Invoice</option>
+          <option>Purchase Invoice</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label-deck">Posting Date <span class="req">*</span></label>
+        <input type="date" class="form-input" value="2026-09-01">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label-deck">Operating Company <span class="req">*</span></label>
+        <select class="form-input">
+          <option>Afintrix (Demo)</option>
+          <option>Afintrix Global Ltd</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label-deck">Cost Center</label>
+        <select class="form-input">
+          <option>Main - AD</option>
+          <option>Dhaka Branch - AD</option>
+          <option>Chattogram - AD</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer-deck">
+    <button class="btn btn-secondary btn-sm" data-close>Cancel</button>
+    <button class="btn btn-primary btn-sm" data-toast="Voucher Committed|JV-2026-00049 saved as working draft.|success" data-close-after>Post Transaction</button>
+  </div>
+</div>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -7,6 +7,7 @@
   <meta name="description" content="Procurement commitments, supplier fulfillment tracking, and purchase order lifecycle management.">
   <link rel="icon" type="image/svg+xml" href="assets/afintrix-symbol.svg">
   <link rel="stylesheet" href="css/sapphire.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 </head>
 <body>
 <div class="app" data-module="purchasing" data-section="list">
@@ -60,33 +61,58 @@
 
       <!-- 1. Executive Procurement Metric Ribbon -->
       <div style="display:grid;grid-template-columns:repeat(4, minmax(0, 1fr));gap:16px;margin-bottom:20px" class="animate-enter animate-delay-1">
-        <div class="saas-card" style="padding:16px 20px">
+        <div class="saas-card hover-lift" style="padding:16px 20px">
           <div style="font-size:11.5px;font-weight:600;color:var(--ink-muted);margin-bottom:4px">Total Committed Spend</div>
-          <div class="num" style="font-size:24px;font-weight:800;color:var(--brand)">$1,048,450<small style="font-size:14px">.00</small></div>
+          <div class="num" style="font-size:24px;font-weight:800;color:var(--brand)">$<span data-countup="1048450">0</span><small style="font-size:14px">.00</small></div>
           <div style="font-size:11px;color:var(--ink-secondary);margin-top:4px">49 total item units</div>
         </div>
 
-        <div class="saas-card" style="padding:16px 20px">
+        <div class="saas-card hover-lift" style="padding:16px 20px">
           <div style="font-size:11.5px;font-weight:600;color:var(--ink-muted);margin-bottom:4px">Awaiting Warehouse Receipt</div>
           <div class="num" style="font-size:24px;font-weight:800;color:var(--ink)">2 <small style="font-size:14px;color:var(--ink-muted)">Orders</small></div>
           <div style="font-size:11px;color:var(--brand);margin-top:4px;font-weight:600">Stores - AD target</div>
         </div>
 
-        <div class="saas-card" style="padding:16px 20px">
+        <div class="saas-card hover-lift" style="padding:16px 20px">
           <div style="font-size:11.5px;font-weight:600;color:var(--ink-muted);margin-bottom:4px">Pending Vendor Invoicing</div>
           <div class="num" style="font-size:24px;font-weight:800;color:var(--warn)">1 <small style="font-size:14px;color:var(--ink-muted)">Order</small></div>
           <div style="font-size:11px;color:var(--warn);margin-top:4px;font-weight:600">$62,300 outstanding</div>
         </div>
 
-        <div class="saas-card" style="padding:16px 20px">
+        <div class="saas-card hover-lift" style="padding:16px 20px">
           <div style="font-size:11.5px;font-weight:600;color:var(--ink-muted);margin-bottom:4px">Fulfilled &amp; Reconciled</div>
           <div class="num" style="font-size:24px;font-weight:800;color:var(--pos)">3 <small style="font-size:14px;color:var(--ink-muted)">Orders</small></div>
           <div style="font-size:11px;color:var(--pos);margin-top:4px;font-weight:600">100% Goods Receipted</div>
         </div>
       </div>
 
+      <!-- 1b. Procurement Status Mix -->
+      <div class="saas-card animate-enter animate-delay-2" style="margin-bottom:16px">
+        <div class="card-header-bar">
+          <div>
+            <h3>Procurement Status Mix</h3>
+            <div class="card-subtext">Lifecycle distribution across all 8 active &amp; closed orders</div>
+          </div>
+        </div>
+        <div class="card-content-body">
+          <div class="donut-legend-row">
+            <div class="donut-wrap" style="width:120px;height:120px">
+              <canvas id="poStatusDonut"></canvas>
+            </div>
+            <div class="donut-legend-list" style="display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:8px">
+              <div class="donut-legend-row-item"><div style="display:flex;align-items:center;gap:8px"><span class="legend-swatch" style="background:var(--pos)"></span><span style="font-weight:600;font-size:12px">Fulfilled</span></div><span class="num" style="font-weight:700">3</span></div>
+              <div class="donut-legend-row-item"><div style="display:flex;align-items:center;gap:8px"><span class="legend-swatch" style="background:var(--brand)"></span><span style="font-weight:600;font-size:12px">To Receive &amp; Bill</span></div><span class="num" style="font-weight:700">1</span></div>
+              <div class="donut-legend-row-item"><div style="display:flex;align-items:center;gap:8px"><span class="legend-swatch" style="background:var(--warn)"></span><span style="font-weight:600;font-size:12px">To Bill</span></div><span class="num" style="font-weight:700">1</span></div>
+              <div class="donut-legend-row-item"><div style="display:flex;align-items:center;gap:8px"><span class="legend-swatch" style="background:var(--brand-border)"></span><span style="font-weight:600;font-size:12px">To Receive</span></div><span class="num" style="font-weight:700">1</span></div>
+              <div class="donut-legend-row-item"><div style="display:flex;align-items:center;gap:8px"><span class="legend-swatch" style="background:var(--ink-muted)"></span><span style="font-weight:600;font-size:12px">Draft</span></div><span class="num" style="font-weight:700">1</span></div>
+              <div class="donut-legend-row-item"><div style="display:flex;align-items:center;gap:8px"><span class="legend-swatch" style="background:var(--neg)"></span><span style="font-weight:600;font-size:12px">Cancelled</span></div><span class="num" style="font-weight:700">1</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- 2. Interactive Procurement Toolbar -->
-      <div class="saas-card animate-enter animate-delay-2" style="padding:12px 18px;margin-bottom:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+      <div class="saas-card animate-enter animate-delay-3" style="padding:12px 18px;margin-bottom:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
         <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:240px">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="color:var(--ink-muted)"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
           <input type="search" placeholder="Filter purchase orders by reference, supplier, date..." data-filter="#poTable" style="border:0;background:transparent;outline:0;font-size:13px;color:var(--ink);width:100%" aria-label="Filter orders">
@@ -111,7 +137,7 @@
       </div>
 
       <!-- 3. High-Density Procurement Table -->
-      <div class="table-wrapper animate-enter animate-delay-3">
+      <div class="table-wrapper animate-enter animate-delay-4">
         <div class="table-scroller">
           <table class="saas-table" id="poTable" style="min-width:1040px">
             <thead>

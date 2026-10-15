@@ -7,6 +7,7 @@
   <meta name="description" content="Employee personnel file, compensation structure, leave quota, and contract dossier.">
   <link rel="icon" type="image/svg+xml" href="assets/afintrix-symbol.svg">
   <link rel="stylesheet" href="css/sapphire.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 </head>
 <body>
 <div class="app" data-module="people" data-section="record">
@@ -76,12 +77,12 @@
             <div style="display:flex;align-items:center;gap:24px;border-left:1px solid var(--border);padding-left:24px">
               <div>
                 <div style="font-size:11px;font-weight:600;color:var(--ink-muted);text-transform:uppercase">Monthly Gross</div>
-                <div class="num" style="font-size:20px;font-weight:800;color:var(--brand)">$ 92,000.00</div>
+                <div class="num" style="font-size:20px;font-weight:800;color:var(--brand)">$ <span data-countup="92000">0</span>.00</div>
               </div>
               <div style="width:1px;height:28px;background:var(--border)"></div>
               <div>
                 <div style="font-size:11px;font-weight:600;color:var(--ink-muted);text-transform:uppercase">Attendance Sep</div>
-                <div class="num" style="font-size:20px;font-weight:800;color:var(--pos)">95.4%</div>
+                <div class="num" style="font-size:20px;font-weight:800;color:var(--pos)"><span data-countup="95.4" data-countup-decimals="1">0</span>%</div>
               </div>
             </div>
           </div>
@@ -89,40 +90,40 @@
 
         <!-- 2. Leave Quotas & Entitlement Strip -->
         <div style="display:grid;grid-template-columns:repeat(4, minmax(0, 1fr));gap:16px;margin-bottom:24px" class="animate-enter animate-delay-2">
-          <div class="saas-card" style="padding:16px 20px">
-            <div style="font-size:11.5px;font-weight:600;color:var(--ink-muted);margin-bottom:4px">Casual Leave Quota</div>
-            <div class="num" style="font-size:24px;font-weight:800;color:var(--ink)">8 <small style="font-size:14px;color:var(--ink-muted)">/ 10 days</small></div>
-            <div style="height:5px;background:var(--border);border-radius:99px;margin:8px 0;overflow:hidden">
-              <div style="width:80%;height:100%;background:var(--brand)"></div>
+          <div class="saas-card hover-lift" style="padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:10px">
+            <div>
+              <div style="font-size:11.5px;font-weight:600;color:var(--ink-muted);margin-bottom:4px">Casual Leave Quota</div>
+              <div class="num" style="font-size:24px;font-weight:800;color:var(--ink)">8 <small style="font-size:14px;color:var(--ink-muted)">/ 10</small></div>
+              <div style="font-size:11px;color:var(--ink-secondary);margin-top:4px">2 days consumed</div>
             </div>
-            <div style="font-size:11px;color:var(--ink-secondary)">2 days consumed in 2026</div>
+            <div class="ring-box"><canvas id="ringCasualRecord"></canvas></div>
           </div>
 
-          <div class="saas-card" style="padding:16px 20px">
-            <div style="font-size:11.5px;font-weight:600;color:var(--ink-muted);margin-bottom:4px">Sick Leave Entitlement</div>
-            <div class="num" style="font-size:24px;font-weight:800;color:var(--ink)">5 <small style="font-size:14px;color:var(--ink-muted)">/ 14 days</small></div>
-            <div style="height:5px;background:var(--border);border-radius:99px;margin:8px 0;overflow:hidden">
-              <div style="width:35%;height:100%;background:var(--warn)"></div>
+          <div class="saas-card hover-lift" style="padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:10px">
+            <div>
+              <div style="font-size:11.5px;font-weight:600;color:var(--ink-muted);margin-bottom:4px">Sick Leave Entitlement</div>
+              <div class="num" style="font-size:24px;font-weight:800;color:var(--ink)">5 <small style="font-size:14px;color:var(--ink-muted)">/ 14</small></div>
+              <div style="font-size:11px;color:var(--ink-secondary);margin-top:4px">9 days taken</div>
             </div>
-            <div style="font-size:11px;color:var(--ink-secondary)">9 days medical leave taken</div>
+            <div class="ring-box"><canvas id="ringSickRecord"></canvas></div>
           </div>
 
-          <div class="saas-card" style="padding:16px 20px">
-            <div style="font-size:11.5px;font-weight:600;color:var(--ink-muted);margin-bottom:4px">Earned Annual Leave</div>
-            <div class="num" style="font-size:24px;font-weight:800;color:var(--ink)">12 <small style="font-size:14px;color:var(--ink-muted)">/ 20 days</small></div>
-            <div style="height:5px;background:var(--border);border-radius:99px;margin:8px 0;overflow:hidden">
-              <div style="width:60%;height:100%;background:var(--pos)"></div>
+          <div class="saas-card hover-lift" style="padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:10px">
+            <div>
+              <div style="font-size:11.5px;font-weight:600;color:var(--ink-muted);margin-bottom:4px">Earned Annual Leave</div>
+              <div class="num" style="font-size:24px;font-weight:800;color:var(--ink)">12 <small style="font-size:14px;color:var(--ink-muted)">/ 20</small></div>
+              <div style="font-size:11px;color:var(--ink-secondary);margin-top:4px">Rollover approved</div>
             </div>
-            <div style="font-size:11px;color:var(--ink-secondary)">Accrued rollover approved</div>
+            <div class="ring-box"><canvas id="ringEarnedRecord"></canvas></div>
           </div>
 
-          <div class="saas-card" style="padding:16px 20px;border:1px solid var(--gold-border);background:var(--gold-surface)">
-            <div style="font-size:11.5px;font-weight:700;color:var(--gold-ink);margin-bottom:4px">Monthly Attendance</div>
-            <div class="num" style="font-size:24px;font-weight:800;color:var(--gold-ink)">21 <small style="font-size:14px">/ 22 days</small></div>
-            <div style="height:5px;background:var(--gold-border);border-radius:99px;margin:8px 0;overflow:hidden">
-              <div style="width:95.4%;height:100%;background:var(--gold)"></div>
+          <div class="saas-card hover-lift" style="padding:16px 20px;border:1px solid var(--gold-border);background:var(--gold-surface);display:flex;align-items:center;justify-content:space-between;gap:10px">
+            <div>
+              <div style="font-size:11.5px;font-weight:700;color:var(--gold-ink);margin-bottom:4px">Monthly Attendance</div>
+              <div class="num" style="font-size:24px;font-weight:800;color:var(--gold-ink)">21 <small style="font-size:14px">/ 22</small></div>
+              <div style="font-size:11px;color:var(--gold-ink);font-weight:600;margin-top:4px">0 tardy arrivals</div>
             </div>
-            <div style="font-size:11px;color:var(--gold-ink);font-weight:600">1 absent &middot; 0 tardy arrivals</div>
+            <div class="ring-box"><canvas id="ringAttendanceRecord"></canvas></div>
           </div>
         </div>
 
@@ -373,6 +374,20 @@
 
       <!-- Tab: Salary & Slips -->
       <div data-panel="pay" hidden>
+        <div class="saas-card animate-enter" style="margin-bottom:20px">
+          <div class="card-header-bar">
+            <div>
+              <h3>Net Disbursement Trend</h3>
+              <div class="card-subtext">Last 3 payroll cycles</div>
+            </div>
+          </div>
+          <div class="card-content-body">
+            <div class="chart-box chart-box-xs">
+              <canvas id="salaryTrendChart"></canvas>
+            </div>
+          </div>
+        </div>
+
         <div class="table-wrapper animate-enter">
           <table class="saas-table">
             <thead>

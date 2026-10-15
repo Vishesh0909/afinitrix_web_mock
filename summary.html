@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Executive Summary · AFINTRIX ERP</title>
+  <meta name="description" content="Cross-module executive snapshot of financials, receivables, procurement, workforce, and governance.">
+  <link rel="icon" type="image/svg+xml" href="assets/afintrix-symbol.svg">
+  <link rel="stylesheet" href="css/sapphire.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="app" data-section="summary">
+  <main class="main">
+    <div data-crumb="Enterprise Workspace / Executive Summary" hidden></div>
+
+    <!-- Page Header -->
+    <div class="page-title-banner animate-enter" style="padding-bottom:20px">
+      <div class="page-title-row">
+        <div class="page-headline-group">
+          <h1>Executive Summary</h1>
+          <div class="page-caption">
+            <span>Afintrix (Demo) Entity</span>
+            <span>&middot;</span>
+            <span>All Modules &middot; FY 2026&ndash;2027</span>
+            <span>&middot;</span>
+            <span style="color:var(--pos);font-weight:600">Consolidated Snapshot</span>
+          </div>
+        </div>
+
+        <div class="page-action-cluster">
+          <div class="segmented-control">
+            <span class="segmented-pill"></span>
+            <button class="btn btn-ghost btn-sm active">Full Year</button>
+            <button class="btn btn-ghost btn-sm">Quarter</button>
+            <button class="btn btn-ghost btn-sm">Month</button>
+          </div>
+
+          <button class="btn btn-primary btn-sm" data-toast="Executive Brief Queued|A consolidated PDF snapshot is being prepared.|success">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            <span>Export Brief</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Viewport Canvas -->
+    <div class="page-viewport-canvas">
+
+      <!-- 1. Cross-Module Headline Metrics -->
+      <div style="display:grid;grid-template-columns:repeat(4, minmax(0, 1fr));gap:16px;margin-bottom:24px" class="animate-enter animate-delay-1">
+        <a href="financials.html" class="saas-card hover-lift" style="padding:16px 20px;display:block">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+            <span style="font-size:11.5px;font-weight:600;color:var(--ink-muted)">Net Operating Surplus</span>
+            <span class="status-badge green">+12.4%</span>
+          </div>
+          <div class="num" style="font-size:24px;font-weight:800;color:var(--ink)"><span class="cur" style="font-size:16px">$</span><span data-countup="109340">0</span></div>
+          <div style="font-size:11px;color:var(--ink-secondary);margin-top:4px">Income less operating expenses</div>
+          <div class="sparkline-box"><canvas id="sumSparkSurplus"></canvas></div>
+        </a>
+
+        <a href="report.html" class="saas-card hover-lift" style="padding:16px 20px;display:block">
+          <div style="font-size:11.5px;font-weight:600;color:var(--ink-muted);margin-bottom:4px">Receivables Outstanding</div>
+          <div class="num" style="font-size:24px;font-weight:800;color:var(--ink)"><span class="cur" style="font-size:16px">$</span><span data-countup="316100">0</span></div>
+          <div style="font-size:11px;color:var(--gold-ink);margin-top:4px;font-weight:600">4 accounts past 90 days</div>
+          <div class="sparkline-box"><canvas id="sumSparkReceivable"></canvas></div>
+        </a>
+
+        <a href="list.html" class="saas-card hover-lift" style="padding:16px 20px;display:block">
+          <div style="font-size:11.5px;font-weight:600;color:var(--ink-muted);margin-bottom:4px">Procurement Commitment</div>
+          <div class="num" style="font-size:24px;font-weight:800;color:var(--ink)"><span class="cur" style="font-size:16px">$</span><span data-countup="1048450">0</span></div>
+          <div style="font-size:11px;color:var(--ink-secondary);margin-top:4px">8 orders &middot; 49 item units</div>
+          <div class="sparkline-box"><canvas id="sumSparkProcurement"></canvas></div>
+        </a>
+
+        <a href="approval.html" class="saas-card hover-lift" style="padding:16px 20px;display:block;border:1px solid var(--gold-border);background:var(--gold-surface)">
+          <div style="font-size:11.5px;font-weight:700;color:var(--gold-ink);margin-bottom:4px">Pending Authorizations</div>
+          <div class="num" style="font-size:24px;font-weight:800;color:var(--gold-ink)"><span data-countup="5">0</span> <small style="font-size:14px">items</small></div>
+          <div style="font-size:11px;color:var(--gold-ink);margin-top:4px;font-weight:600">3 due today</div>
+          <div class="sparkline-box"><canvas id="sumSparkApprovals"></canvas></div>
+        </a>
+      </div>
+
+      <!-- 2. Performance & Receivables -->
+      <div style="display:grid;grid-template-columns:1.8fr 1.2fr;gap:24px;margin-bottom:24px" class="animate-enter animate-delay-2">
+        <div class="saas-card">
+          <div class="card-header-bar">
+            <div>
+              <h3>Revenue &amp; Expenditure Trajectory</h3>
+              <div class="card-subtext">FY 2026&ndash;2027 &middot; actuals through August, remainder projected</div>
+            </div>
+            <div class="chart-legend-row">
+              <span class="chart-legend-chip" data-chart="sumTrendChart" data-dataset-index="0"><span class="legend-swatch" style="background:var(--brand)"></span>Revenue</span>
+              <span class="chart-legend-chip" data-chart="sumTrendChart" data-dataset-index="1"><span class="legend-swatch" style="background:var(--gold)"></span>Expense</span>
+              <span class="chart-legend-chip" data-chart="sumTrendChart" data-dataset-index="2"><span class="legend-swatch" style="background:var(--pos)"></span>Net</span>
+            </div>
+          </div>
+          <div class="card-content-body">
+            <div class="chart-box chart-box-sm">
+              <canvas id="sumTrendChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="saas-card">
+          <div class="card-header-bar">
+            <div>
+              <h3>Receivables Ageing</h3>
+              <div class="card-subtext">Collection risk distribution</div>
+            </div>
+            <a href="report.html" class="btn btn-ghost btn-sm" style="color:var(--brand);font-weight:700">Audit &rarr;</a>
+          </div>
+          <div class="card-content-body">
+            <div class="donut-legend-row">
+              <div class="donut-wrap"><canvas id="sumAgeingDonut"></canvas></div>
+              <div class="donut-legend-list">
+                <div class="donut-legend-row-item" data-chart-link="sumAgeingDonut" data-seg-index="0">
+                  <div style="display:flex;align-items:center;gap:8px"><span class="legend-swatch" style="background:#1E39D6"></span><span style="font-weight:600;font-size:12.5px">Current</span></div>
+                  <span class="num" style="font-weight:700">45%</span>
+                </div>
+                <div class="donut-legend-row-item" data-chart-link="sumAgeingDonut" data-seg-index="1">
+                  <div style="display:flex;align-items:center;gap:8px"><span class="legend-swatch" style="background:#4865FF"></span><span style="font-weight:600;font-size:12.5px">31&ndash;60 Days</span></div>
+                  <span class="num" style="font-weight:700">25%</span>
+                </div>
+                <div class="donut-legend-row-item" data-chart-link="sumAgeingDonut" data-seg-index="2">
+                  <div style="display:flex;align-items:center;gap:8px"><span class="legend-swatch" style="background:#8FA1FF"></span><span style="font-weight:600;font-size:12.5px">61&ndash;90 Days</span></div>
+                  <span class="num" style="font-weight:700">18%</span>
+                </div>
+                <div class="donut-legend-row-item flag" data-chart-link="sumAgeingDonut" data-seg-index="3">
+                  <div style="display:flex;align-items:center;gap:8px"><span class="legend-swatch" style="background:#D5AA55"></span><span style="font-weight:700;font-size:12.5px;color:var(--gold-ink)">90+ Days</span></div>
+                  <span class="num" style="font-weight:800;color:var(--gold-ink)">12%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Operations Across Modules -->
+      <div style="display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));gap:24px;margin-bottom:24px" class="animate-enter animate-delay-3">
+        <div class="saas-card">
+          <div class="card-header-bar">
+            <div>
+              <h3>Procurement Status</h3>
+              <div class="card-subtext">Order lifecycle mix</div>
+            </div>
+          </div>
+          <div class="card-content-body">
+            <div class="chart-box chart-box-xs">
+              <canvas id="sumProcurementDonut"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="saas-card">
+          <div class="card-header-bar">
+            <div>
+              <h3>Approval Queue</h3>
+              <div class="card-subtext">Awaiting authorization by type</div>
+            </div>
+          </div>
+          <div class="card-content-body">
+            <div class="chart-box chart-box-xs">
+              <canvas id="sumApprovalBar"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="saas-card">
+          <div class="card-header-bar">
+            <div>
+              <h3>Cash Position</h3>
+              <div class="card-subtext">Rolling 12-month bank balance</div>
+            </div>
+          </div>
+          <div class="card-content-body">
+            <div class="chart-box chart-box-xs">
+              <canvas id="sumCashChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Summary Tables -->
+      <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:24px" class="animate-enter animate-delay-4">
+
+        <!-- Module Status Summary -->
+        <div class="table-wrapper">
+          <div class="card-header-bar">
+            <div>
+              <h3>Module Status Summary</h3>
+              <div class="card-subtext">Headline indicator per operational area</div>
+            </div>
+          </div>
+          <table class="saas-table dense">
+            <thead>
+              <tr>
+                <th>Operational Module</th>
+                <th>Headline Indicator</th>
+                <th class="align-right">Value</th>
+                <th>Standing</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="primary-ref"><a href="financials.html">Accounting &amp; Ledger</a></td>
+                <td>Net operating surplus</td>
+                <td class="numeric" style="font-weight:700">$109,340.00</td>
+                <td><span class="status-badge green"><span class="status-badge-dot"></span>Reconciled</span></td>
+              </tr>
+              <tr>
+                <td class="primary-ref"><a href="report.html">Receivables</a></td>
+                <td>Outstanding debtor balance</td>
+                <td class="numeric" style="font-weight:700">$316,100.00</td>
+                <td><span class="status-badge gold">4 Flagged</span></td>
+              </tr>
+              <tr>
+                <td class="primary-ref"><a href="list.html">Procurement</a></td>
+                <td>Committed supplier spend</td>
+                <td class="numeric" style="font-weight:700">$1,048,450.00</td>
+                <td><span class="status-badge blue">2 To Receive</span></td>
+              </tr>
+              <tr>
+                <td class="primary-ref"><a href="report.html">Payables</a></td>
+                <td>Creditor ledger balance</td>
+                <td class="numeric" style="font-weight:700">$184,293.00</td>
+                <td><span class="status-badge neutral">Net 30</span></td>
+              </tr>
+              <tr>
+                <td class="primary-ref"><a href="record.html">Workforce</a></td>
+                <td>Monthly attendance rate</td>
+                <td class="numeric" style="font-weight:700">95.4%</td>
+                <td><span class="status-badge green"><span class="status-badge-dot"></span>On Track</span></td>
+              </tr>
+              <tr>
+                <td class="primary-ref"><a href="approval.html">Governance</a></td>
+                <td>Requests awaiting decision</td>
+                <td class="numeric" style="font-weight:700">5</td>
+                <td><span class="status-badge yellow">Action Needed</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Financial Position Snapshot -->
+        <div class="table-wrapper">
+          <div class="card-header-bar">
+            <div>
+              <h3>Financial Position Snapshot</h3>
+              <div class="card-subtext">Consolidated, FY to date (USD)</div>
+            </div>
+          </div>
+          <table class="saas-table dense">
+            <thead>
+              <tr>
+                <th>Position Line</th>
+                <th class="align-right">Amount ($)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Operating Income</td>
+                <td class="numeric" style="color:var(--pos);font-weight:700">363,100.00</td>
+              </tr>
+              <tr>
+                <td>Operating Expenses</td>
+                <td class="numeric">(253,760.00)</td>
+              </tr>
+              <tr>
+                <td style="font-weight:700">Net Operating Surplus</td>
+                <td class="numeric" style="font-weight:800;color:var(--brand)">109,340.00</td>
+              </tr>
+              <tr>
+                <td>Accounts Receivable</td>
+                <td class="numeric">316,100.00</td>
+              </tr>
+              <tr>
+                <td>Accounts Payable</td>
+                <td class="numeric">184,293.00</td>
+              </tr>
+              <tr>
+                <td>Bank Position</td>
+                <td class="numeric" style="color:var(--neg);font-weight:700">(117,854.00)</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td style="font-weight:800">Trial Balance Variance</td>
+                <td class="numeric" style="font-weight:800;color:var(--pos)">0.00</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

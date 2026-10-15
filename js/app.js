@@ -88,9 +88,15 @@
   // Global Navigation Taxonomy
   const NAV_STRUCTURE = [
     {
+      group: 'Overview',
+      items: [
+        { id: 'summary', label: 'Executive Summary', icon: 'dashboard', href: 'summary.html' }
+      ]
+    },
+    {
       group: 'Core Financials',
       items: [
-        { id: 'dashboard', label: 'Financial Overview', icon: 'dashboard', href: 'financials.html' },
+        { id: 'dashboard', label: 'Financial Overview', icon: 'accounting', href: 'financials.html' },
         { id: 'report', label: 'Trial Balance & Ledger', icon: 'report', href: 'report.html' }
       ]
     },
@@ -122,6 +128,7 @@
     {
       group: 'Workspaces',
       items: [
+        { title: 'Executive Summary (All Modules)', href: 'summary.html', key: 'G X' },
         { title: 'Accounting Overview Dashboard', href: 'financials.html', key: 'G D' },
         { title: 'Purchase Orders Procurement Deck', href: 'list.html', key: 'G P' },
         { title: 'New Purchase Order Studio', href: 'form.html', key: 'N O' },
@@ -786,11 +793,26 @@
     });
   }
 
+  // Shared fiscal data — referenced by both the Financial Overview and the
+  // Executive Summary so the two can never report different numbers.
+  const FY = {
+    months: ['Jul 26', 'Aug 26', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan 27', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+    revenue: [182000, 174000, 158000, 165000, 171000, 179000, 188000, 184000, 192000, 198000, 205000, 212000],
+    expense: [106000, 88000, 98000, 101000, 104000, 109000, 112000, 108000, 115000, 118000, 121000, 124000],
+    actualCount: 2,
+    ageingLabels: ['0-30 Days', '31-60 Days', '61-90 Days', '90+ Days'],
+    ageing: [142100, 78600, 56900, 38500],
+    cashMonths: ['Sep 25', 'Oct', 'Nov', 'Dec', 'Jan 26', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug 26'],
+    cash: [42647, 50000, 39706, 54412, 47059, 58824, 27941, 7353, -27941, -66176, -89706, -117854],
+    poStatusLabels: ['Fulfilled', 'To Receive & Bill', 'To Bill', 'To Receive', 'Draft', 'Cancelled'],
+    poStatus: [3, 1, 1, 1, 1, 1],
+  };
+
   function initDashboardCharts() {
-    const months = ['Jul 26', 'Aug 26', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan 27', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
-    const revenue = [182000, 174000, 158000, 165000, 171000, 179000, 188000, 184000, 192000, 198000, 205000, 212000];
-    const expense = [106000, 88000, 98000, 101000, 104000, 109000, 112000, 108000, 115000, 118000, 121000, 124000];
-    const actualCount = 2;
+    const months = FY.months;
+    const revenue = FY.revenue;
+    const expense = FY.expense;
+    const actualCount = FY.actualCount;
 
     registerChart('trajectoryChart', (el, t) => new Chart(el.getContext('2d'), {
       type: 'bar',
@@ -857,9 +879,9 @@
     registerChart('ageingDonut', (el, t) => new Chart(el.getContext('2d'), {
       type: 'doughnut',
       data: {
-        labels: ['0-30 Days', '31-60 Days', '61-90 Days', '90+ Days'],
+        labels: FY.ageingLabels,
         datasets: [{
-          data: [142100, 78600, 56900, 38500],
+          data: FY.ageing,
           backgroundColor: [t.brand, hexAlpha(t.brand, 0.72), hexAlpha(t.brand, 0.4), t.gold],
           borderColor: t.surface,
           borderWidth: 3,
@@ -883,8 +905,8 @@
     }));
 
     registerChart('cashFlowChart', (el, t) => {
-      const cmonths = ['Sep 25', 'Oct', 'Nov', 'Dec', 'Jan 26', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug 26'];
-      const balances = [42647, 50000, 39706, 54412, 47059, 58824, 27941, 7353, -27941, -66176, -89706, -117854];
+      const cmonths = FY.cashMonths;
+      const balances = FY.cash;
       return new Chart(el.getContext('2d'), {
         type: 'line',
         data: {
@@ -1055,9 +1077,9 @@
     registerChart('poStatusDonut', (el, t) => new Chart(el.getContext('2d'), {
       type: 'doughnut',
       data: {
-        labels: ['Fulfilled', 'To Receive & Bill', 'To Bill', 'To Receive', 'Draft', 'Cancelled'],
+        labels: FY.poStatusLabels,
         datasets: [{
-          data: [3, 1, 1, 1, 1, 1],
+          data: FY.poStatus,
           backgroundColor: [t.pos, t.brand, t.warn, hexAlpha(t.brand, 0.5), t.inkMuted, t.neg],
           borderColor: t.surface,
           borderWidth: 3,
@@ -1076,6 +1098,183 @@
       },
       plugins: [centerTextPlugin(() => '8', () => 'Orders', t)],
     }));
+  }
+
+  function initSummaryCharts() {
+    registerChart('sumTrendChart', (el, t) => new Chart(el.getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: FY.months,
+        datasets: [
+          {
+            type: 'bar',
+            label: 'Revenue',
+            data: FY.revenue,
+            backgroundColor: (ctx) => ctx.dataIndex < FY.actualCount ? t.brand : hexAlpha(t.brand, 0.22),
+            borderRadius: 4,
+            maxBarThickness: 18,
+            order: 2,
+          },
+          {
+            type: 'bar',
+            label: 'Expense',
+            data: FY.expense,
+            backgroundColor: (ctx) => ctx.dataIndex < FY.actualCount ? t.gold : hexAlpha(t.gold, 0.28),
+            borderRadius: 4,
+            maxBarThickness: 18,
+            order: 2,
+          },
+          {
+            type: 'line',
+            label: 'Net',
+            data: FY.revenue.map((r, i) => r - FY.expense[i]),
+            borderColor: t.pos,
+            borderWidth: 2.5,
+            pointRadius: (ctx) => ctx.dataIndex < FY.actualCount ? 4 : 0,
+            pointHoverRadius: 5,
+            pointBackgroundColor: t.surface,
+            pointBorderColor: t.pos,
+            pointBorderWidth: 2,
+            tension: 0.35,
+            order: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { display: false },
+          tooltip: { ...baseTooltip(t), callbacks: { label: (c) => `${c.dataset.label}: ${fmtCurrency(c.parsed.y)}` } },
+        },
+        scales: {
+          x: { grid: { display: false }, ticks: { color: t.inkMuted, font: { size: 10 } }, border: { display: false } },
+          y: { grid: { color: t.border }, ticks: { color: t.inkMuted, font: { size: 10 }, callback: (v) => fmtCompact(v) }, border: { display: false } },
+        },
+      },
+    }));
+
+    registerChart('sumAgeingDonut', (el, t) => new Chart(el.getContext('2d'), {
+      type: 'doughnut',
+      data: {
+        labels: FY.ageingLabels,
+        datasets: [{
+          data: FY.ageing,
+          backgroundColor: [t.brand, hexAlpha(t.brand, 0.72), hexAlpha(t.brand, 0.4), t.gold],
+          borderColor: t.surface,
+          borderWidth: 3,
+          hoverOffset: 10,
+        }],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '72%',
+        animation: { animateRotate: true, duration: 700 },
+        plugins: {
+          legend: { display: false },
+          tooltip: { ...baseTooltip(t), callbacks: { label: (c) => `${c.label}: ${fmtCurrency(c.parsed)}` } },
+        },
+      },
+      plugins: [centerTextPlugin(() => '$316.1K', () => 'Receivable', t)],
+    }));
+
+    registerChart('sumProcurementDonut', (el, t) => new Chart(el.getContext('2d'), {
+      type: 'doughnut',
+      data: {
+        labels: FY.poStatusLabels,
+        datasets: [{
+          data: FY.poStatus,
+          backgroundColor: [t.pos, t.brand, t.warn, hexAlpha(t.brand, 0.5), t.inkMuted, t.neg],
+          borderColor: t.surface,
+          borderWidth: 3,
+          hoverOffset: 10,
+        }],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '70%',
+        animation: { animateRotate: true, duration: 700 },
+        plugins: {
+          legend: { display: false },
+          tooltip: { ...baseTooltip(t), callbacks: { label: (c) => `${c.label}: ${c.parsed} order${c.parsed === 1 ? '' : 's'}` } },
+        },
+      },
+      plugins: [centerTextPlugin(() => '8', () => 'Orders', t)],
+    }));
+
+    registerChart('sumApprovalBar', (el, t) => new Chart(el.getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['Casual Leave', 'Travel Expense', 'Purchase Order'],
+        datasets: [{
+          data: [3, 1, 1],
+          backgroundColor: [t.warn, t.brand, hexAlpha(t.brand, 0.55)],
+          borderRadius: 5,
+          barThickness: 18,
+        }],
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { ...baseTooltip(t), callbacks: { label: (c) => `${c.parsed.x} pending` } },
+        },
+        scales: {
+          x: { grid: { color: t.border }, ticks: { color: t.inkMuted, stepSize: 1, font: { size: 10 } }, border: { display: false } },
+          y: { grid: { display: false }, ticks: { color: t.inkSecondary, font: { size: 11, weight: '600' } }, border: { display: false } },
+        },
+      },
+    }));
+
+    registerChart('sumCashChart', (el, t) => new Chart(el.getContext('2d'), {
+      type: 'line',
+      data: {
+        labels: FY.cashMonths,
+        datasets: [{
+          label: 'Bank Balance',
+          data: FY.cash,
+          borderWidth: 2.5,
+          pointRadius: 0,
+          pointHoverRadius: 5,
+          tension: 0.3,
+          fill: 'origin',
+          segment: {
+            borderColor: (ctx) => (ctx.p0.parsed.y < 0 || ctx.p1.parsed.y < 0) ? t.neg : t.brand,
+            backgroundColor: (ctx) => (ctx.p0.parsed.y < 0 || ctx.p1.parsed.y < 0) ? hexAlpha(t.neg, 0.1) : hexAlpha(t.brand, 0.14),
+          },
+        }],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { display: false },
+          tooltip: { ...baseTooltip(t), callbacks: { label: (c) => fmtCurrency(c.parsed.y) } },
+        },
+        scales: {
+          x: { grid: { display: false }, ticks: { color: t.inkMuted, font: { size: 10 }, maxTicksLimit: 6 }, border: { display: false } },
+          y: {
+            ticks: { color: t.inkMuted, font: { size: 10 }, callback: (v) => fmtCompact(v) },
+            grid: {
+              color: (ctx) => ctx.tick.value === 0 ? t.inkMuted : t.border,
+              lineWidth: (ctx) => ctx.tick.value === 0 ? 1.5 : 1,
+            },
+            border: { display: false },
+          },
+        },
+      },
+    }));
+
+    makeSparkline('sumSparkSurplus', [68, 72, 70, 79, 84, 97, 109.3], 'pos');
+    makeSparkline('sumSparkReceivable', [284, 291, 303, 298, 309, 312, 316.1], 'brand');
+    makeSparkline('sumSparkProcurement', [612, 704, 788, 851, 923, 986, 1048.5], 'gold');
+    makeSparkline('sumSparkApprovals', [2, 3, 3, 4, 3, 4, 5], 'warn');
   }
 
   function initApprovalCharts() {
@@ -1156,6 +1355,7 @@
     if (typeof Chart === 'undefined') return;
     Chart.defaults.font.family = "'Plus Jakarta Sans', system-ui, sans-serif";
     Chart.defaults.font.size = 11.5;
+    initSummaryCharts();
     initDashboardCharts();
     initReportCharts();
     initListCharts();

@@ -100,30 +100,32 @@
   --duration-slow: 0.35s;
 }
 
+/* Near-neutral black base — only a trace of cool tint so the surfaces read
+   as black rather than navy, leaving the royal blue free to act as accent. */
 [data-theme="dark"] {
-  --canvas: #090C16;
-  --canvas-subtle: #0E1220;
-  --surface: #12172A;
-  --surface-alt: #171E34;
-  --surface-hover: #1D2641;
-  --surface-active: #242F50;
+  --canvas: #08080A;
+  --canvas-subtle: #0C0C0F;
+  --surface: #121215;
+  --surface-alt: #171719;
+  --surface-hover: #1D1D21;
+  --surface-active: #26262B;
 
-  --ink: #F3F5FA;
-  --ink-secondary: #9AA6BF;
-  --ink-muted: #6B7792;
-  --ink-faint: #434D64;
+  --ink: #F4F4F6;
+  --ink-secondary: #A3A3AD;
+  --ink-muted: #74747E;
+  --ink-faint: #4A4A52;
 
-  --border: #1E273F;
-  --border-subtle: #171F33;
-  --border-strong: #2A3655;
+  --border: #26262C;
+  --border-subtle: #1C1C21;
+  --border-strong: #37373F;
   --border-focus: #5572FF;
 
   --brand: #4865FF;
   --brand-hover: #607AFF;
   --brand-active: #324ED9;
-  --brand-surface: #151F48;
-  --brand-border: #243578;
-  --brand-glow: rgba(72, 101, 255, 0.2);
+  --brand-surface: #16193A;
+  --brand-border: #2A3570;
+  --brand-glow: rgba(72, 101, 255, 0.22);
 
   --gold: #E2BC68;
   --gold-ink: #F7D48E;
@@ -624,7 +626,7 @@ html.reveal-enabled .reveal.in-view {
 }
 
 .top-bar-deck.scrolled {
-  box-shadow: 0 4px 16px rgba(17, 21, 40, 0.06);
+  box-shadow: var(--shadow-md);
   border-bottom-color: var(--border-strong);
 }
 
@@ -1559,7 +1561,7 @@ table.saas-table tfoot td {
 .overlay-scrim {
   position: fixed;
   inset: 0;
-  background: rgba(12, 16, 32, 0.45);
+  background: rgba(6, 6, 9, 0.52);
   backdrop-filter: blur(3px);
   z-index: 90;
   opacity: 0;

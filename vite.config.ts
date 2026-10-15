@@ -15,6 +15,7 @@ export default defineConfig(() => {
       rollupOptions: {
         input: {
           main: path.resolve(__dirname, 'index.html'),
+          summary: path.resolve(__dirname, 'summary.html'),
           financials: path.resolve(__dirname, 'financials.html'),
           list: path.resolve(__dirname, 'list.html'),
           form: path.resolve(__dirname, 'form.html'),
